@@ -7,16 +7,16 @@ const UsernameQuerySchema = z.object({
   username: usernameValidation,
 });
 
-export async function GET(request: Request){
+export async function GET(request: Request) {
   await dbConnect();
 
   try {
     const { searchParams } = new URL(request.url);
-    const queryParams = {
+    const queryParam = {
       username: searchParams.get('username'),
     };
 
-    const result = UsernameQuerySchema.safeParse(queryParams);
+    const result = UsernameQuerySchema.safeParse(queryParam);
 
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
@@ -67,4 +67,3 @@ export async function GET(request: Request){
     );
   }
 }
-
